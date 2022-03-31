@@ -11,9 +11,8 @@ public void levelOne(){
     System.out.println("(D) Display caTEring Items\n(P) Purchase\n(E) Exit");
 }
 
-public void levelOneSubD(){
-    VendingMachine vendingMachine = new VendingMachine();
-    System.out.println(vendingMachine);
+public void levelOneSubD(VendingMachine vendingMachine){
+    vendingMachine.displayItems();
 }
 
 public void levelOneSubP(){

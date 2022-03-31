@@ -18,6 +18,9 @@ public abstract class Food {
         return name + " $" + price;
     }
 
+    public abstract String message();
+
+
     public void removeItem(int num){
         stock -= num;
     }

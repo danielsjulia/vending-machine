@@ -1,9 +1,6 @@
 package com.techelevator;
 
-import com.techelevator.view.Food;
-import com.techelevator.view.Menu;
-import com.techelevator.view.Transaction;
-import com.techelevator.view.VendingMachine;
+import com.techelevator.view.*;
 import jdk.swing.interop.SwingInterOpUtils;
 
 import java.util.Locale;
@@ -13,14 +10,16 @@ public class CaTEringCapstoneCLI {
 
     private Menu menu;
     private Scanner inputScanner;
-    private Transaction balance;
+    private Transaction transaction;
     private VendingMachine vendingMachine;
+    private Funds balance;
 
     public CaTEringCapstoneCLI(Menu menu) {
         this.menu = menu;
         this.inputScanner = new Scanner(System.in);
-        this.balance = new Transaction();
-//        this.vendingMachine = new VendingMachine();
+        this.transaction = new Transaction();
+        this.balance = new Funds();
+        this.vendingMachine = new VendingMachine();
     }
 
     public static void main(String[] args) {
@@ -39,7 +38,7 @@ public class CaTEringCapstoneCLI {
 
             if (level1Input.equals("D")) {
                 // display items
-                this.menu.levelOneSubD();
+                this.menu.levelOneSubD(this.vendingMachine);
             } else if (level1Input.equals("P")) {
                 // make a purchase
                 subP();
@@ -59,7 +58,7 @@ public class CaTEringCapstoneCLI {
             if (levelPInput.equals("M")) {
                 subM();
             } else if (levelPInput.equals("S")) {
-//                subS();
+                subS();
             } else if (levelPInput.equals("F")) {
                 // exit
                 keepGoing = false;
@@ -95,30 +94,27 @@ public class CaTEringCapstoneCLI {
         } while (keepGoing);
     }
 
-//    public void subS() {
-//        boolean keepGoing = true;
-//
-//        do {
-//            this.menu.levelOneSubD();
-//            String levelSInput = inputScanner.nextLine().toUpperCase();
-//            if (levelSInput != "Q") {
-//                for (Food item : vendingMachine.getMenu()) {
-//                    if (levelSInput.contains(item.getSlot()) && item.getStock() != 0) {
-//                        balance.addItem(item);
-//                        balance.withdrawal();
-//                        System.out.println(item.getName() + " $" + item.getPrice() + " $" + balance.getBalance());
-//                    }
-//                    else if (item.getStock() == 0){
-//                        System.out.println("NO LONGER AVAILABLE");
-//                        keepGoing = false;
-//                    } else {
-//                        System.out.println("Item does exist");
-//                        keepGoing = false;
-//                    }
-//                }
-//                System.out.println(balance.getBalance());
-//                keepGoing = false;
-//            }
-//        } while (keepGoing);
-//    }
+    public void subS() {
+        boolean keepGoing = true;
+
+        do {
+            this.menu.levelOneSubD(this.vendingMachine);
+            String levelSInput = inputScanner.nextLine().toUpperCase();
+            Food item = vendingMachine.getMenu().get(levelSInput);
+            if (!vendingMachine.getMenu().containsKey(levelSInput)){
+                System.out.println("Invalid Key, GTFO");
+                keepGoing = false;
+            } else if (item.getStock() > 0){
+                vendingMachine.dispenseItem(item);
+                System.out.println(item.getName() + " $" + item.getPrice() + " $" + balance.getBalance());
+                System.out.println(item.message());
+            } else if (item.getStock() == 0){
+                System.out.println("NO LONGER AVAILABLE");
+                keepGoing = false;
+            } else {
+                keepGoing = false;
+            }
+
+        } while (keepGoing);
+    }
 }
