@@ -21,6 +21,10 @@ public void levelOneSubP(){
     // running total
 }
 
+public void subM(){
+    System.out.println("(1) $1\n(2) $5\n(3) $10\n(4) $20\n(5) Back");
+}
+
 // to-do -- build out
 
 

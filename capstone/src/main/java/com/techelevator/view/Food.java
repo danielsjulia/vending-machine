@@ -7,8 +7,7 @@ public abstract class Food {
     private int stock = 7;
     private String slot;
 
-    public Food(String slot, String name, double price) {
-        this.slot = slot;
+    public Food(String name, double price) {
         this.name = name;
         this.price = price;
         this.stock = stock;
@@ -16,7 +15,11 @@ public abstract class Food {
 
     @Override
     public String toString() {
-        return slot + " " + name + " $" + price;
+        return name + " $" + price;
+    }
+
+    public void removeItem(int num){
+        stock -= num;
     }
 
     public String getName() {

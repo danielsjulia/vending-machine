@@ -1,7 +1,7 @@
 package com.techelevator.view;
 
 public class Dessert extends Food {
-    public Dessert(String slot, String name, double price) {
-        super(slot, name, price);
+    public Dessert(String name, double price) {
+        super(name, price);
     }
 }
