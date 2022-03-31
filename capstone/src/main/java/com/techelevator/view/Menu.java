@@ -12,7 +12,8 @@ public void levelOne(){
 }
 
 public void levelOneSubD(){
-
+    VendingMachine vendingMachine = new VendingMachine();
+    System.out.println(vendingMachine);
 }
 
 public void levelOneSubP(){

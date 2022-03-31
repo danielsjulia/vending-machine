@@ -30,4 +30,8 @@ public abstract class Food {
     public int getStock() {
         return stock;
     }
+
+    public String getSlot() {
+        return this.slot;
+    }
 }

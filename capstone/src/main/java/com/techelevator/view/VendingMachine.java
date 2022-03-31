@@ -3,15 +3,20 @@ package com.techelevator.view;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
 public class VendingMachine {
+
+    private List<Food> menu = new ArrayList<>();
+
+    public VendingMachine() {
+        this.stock();
+    }
+
     public void stock() {
-
-        List<Food> menu = new ArrayList<>();
-
-        File inputFile = new File("catering.csv");
+        File inputFile = new File("catering1.csv");
 
         try {
             Scanner scanner = new Scanner(inputFile);
@@ -41,7 +46,16 @@ public class VendingMachine {
                     menu.add(item4);
                 }
 
-            } System.out.println(menu);
+            }
+
+            String menuString = "";
+
+            for (Food food : menu) {
+                menuString += food + "\n";
+            }
+
+            System.out.println(menuString);
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
