@@ -9,10 +9,11 @@ public abstract class Food {
     private int stock = 7;
     private String slot;
 
-    public Food(String name, BigDecimal price) {
+    public Food(String name, BigDecimal price, String slot) {
         this.name = name;
         this.price = price;
         this.stock = stock;
+        this.slot = slot;
     }
 
     @Override

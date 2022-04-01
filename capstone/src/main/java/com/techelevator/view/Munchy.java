@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class Munchy extends Food{
 
-    public Munchy(String name, BigDecimal price) {
-        super(name, price);
+    public Munchy(String name, BigDecimal price, String slot) {
+        super(name, price, slot);
     }
 
     @Override

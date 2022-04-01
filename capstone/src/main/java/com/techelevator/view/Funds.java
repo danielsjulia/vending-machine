@@ -1,17 +1,19 @@
 package com.techelevator.view;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Funds {
 
     private BigDecimal balance = new BigDecimal("0.00");
+    private AuditLog auditLog = new AuditLog();
 
     int nickels = 5;
     int dimes = 10;
     int quarter = 25;
     int dollar = 100;
-
 
     public BigDecimal getBalance() {
         return balance;
@@ -19,9 +21,12 @@ public class Funds {
 
     public void deposit(BigDecimal amountToDeposit) {
         balance = balance.add(amountToDeposit);
+        LocalDateTime currentTime = LocalDateTime.now();
+        auditLog.auditMoneyDeposit(currentTime, amountToDeposit, this.getBalance());
     }
 
     public void withdrawal(BigDecimal amountToWithdrawal) {
+        BigDecimal oldBalance = balance;
         balance = balance.subtract(amountToWithdrawal);
     }
 
@@ -43,8 +48,16 @@ public class Funds {
         cents = cents % dimes;
         nickelAmt = cents / nickels;
 
+        // remaining change is dispensed and Audited
+        BigDecimal change = getBalance();
+        withdrawal(getBalance());
+        LocalDateTime currentTime = LocalDateTime.now();
+        auditLog.auditChangeGiven(currentTime, change, getBalance());
+
         System.out.println("Your change is: " + dollarAmt + " Dollars " + quarterAmt + " Quarters " + dimesAmt + " Dimes " + nickelAmt + " Nickels");
 
     }
+
+
 
 }

@@ -1,10 +1,9 @@
 package com.techelevator;
 
 import com.techelevator.view.*;
-import jdk.swing.interop.SwingInterOpUtils;
 
 import java.math.BigDecimal;
-import java.util.Locale;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class CaTEringCapstoneCLI {
@@ -14,6 +13,7 @@ public class CaTEringCapstoneCLI {
     private Transaction transaction;
     private VendingMachine vendingMachine;
     private Funds balance;
+    private AuditLog auditLog;
 
     public CaTEringCapstoneCLI(Menu menu) {
         this.menu = menu;
@@ -21,6 +21,7 @@ public class CaTEringCapstoneCLI {
         this.transaction = new Transaction();
         this.balance = new Funds();
         this.vendingMachine = new VendingMachine();
+        this.auditLog = new AuditLog();
     }
 
     public static void main(String[] args) {
@@ -122,9 +123,16 @@ public class CaTEringCapstoneCLI {
                 System.out.println("\nNot enough funds.\n");
                 keepGoing = false;
             }else if (item.getStock() > 0 && balance.getBalance().compareTo(item.getPrice()) >= 0){
+                // dispensing item
                 vendingMachine.dispenseItem(item);
+                BigDecimal oldBalance = balance.getBalance();
                 balance.withdrawal(item.getPrice());
-                transaction.addItem(item);
+
+                // sending info to Audit file
+                LocalDateTime currentTime = LocalDateTime.now();
+                auditLog.auditItemPurchased(currentTime, item.getName(), item.getSlot(), oldBalance, balance.getBalance());
+
+                // printing message
                 System.out.println("\nSelected: " + item.getName() + " $" + item.getPrice() + " Remaining Balance: $" + balance.getBalance());
                 System.out.println(item.message());
             } else {

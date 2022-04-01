@@ -3,11 +3,13 @@ package com.techelevator.view;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class VendingMachine {
 
     private Map<String, Food> menu = new HashMap<>();
+    private AuditLog auditLog = new AuditLog();
 
     public VendingMachine() {
         this.stock();
@@ -28,19 +30,19 @@ public class VendingMachine {
                 BigDecimal price = BigDecimal.valueOf(Double.parseDouble(lineArr[3]));
 
                 if (typeOfFood.equals("Dessert")) {
-                    Food item1 = new Dessert(name, price);
+                    Food item1 = new Dessert(name, price, slot);
                     menu.put(slot, item1);
 
                 } else if (typeOfFood.equals("Drink")) {
-                    Food item2 = new Drinks(name, price);
+                    Food item2 = new Drinks(name, price, slot);
                     menu.put(slot, item2);
 
                 } else if (typeOfFood.equals("Munchy")) {
-                    Food item3 = new Munchy(name, price);
+                    Food item3 = new Munchy(name, price, slot);
                     menu.put(slot, item3);
 
                 } else if (typeOfFood.equals("Sandwich")) {
-                    Food item4 = new Sandwich(name, price);
+                    Food item4 = new Sandwich(name, price, slot);
                     menu.put(slot, item4);
                 }
             }
