@@ -2,8 +2,6 @@ package com.techelevator.view;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Funds {
 
@@ -30,7 +28,7 @@ public class Funds {
         balance = balance.subtract(amountToWithdrawal);
     }
 
-    public void refund() {
+    public String refund() {
         int dollarAmt = 0;
         int quarterAmt = 0;
         int dimesAmt = 0;
@@ -54,10 +52,8 @@ public class Funds {
         LocalDateTime currentTime = LocalDateTime.now();
         auditLog.auditChangeGiven(currentTime, change, getBalance());
 
-        System.out.println("Your change is: " + dollarAmt + " Dollars " + quarterAmt + " Quarters " + dimesAmt + " Dimes " + nickelAmt + " Nickels");
+        return "Your change is: " + dollarAmt + " Dollars " + quarterAmt + " Quarters " + dimesAmt + " Dimes " + nickelAmt + " Nickels\n";
 
     }
-
-
 
 }

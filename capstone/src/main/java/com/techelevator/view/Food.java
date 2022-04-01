@@ -23,7 +23,6 @@ public abstract class Food {
 
     public abstract String message();
 
-
     public void removeItem(int num){
         stock -= num;
     }

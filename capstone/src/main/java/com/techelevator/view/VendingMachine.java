@@ -3,7 +3,6 @@ package com.techelevator.view;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.*;
 
 public class VendingMachine {
@@ -47,14 +46,16 @@ public class VendingMachine {
                 }
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("Can't Find File");
         }
     }
 
     public void displayItems() {
-        Set<String> keys = menu.keySet();
+        TreeMap<String, Food> sorted = new TreeMap<>(menu);
+
+        Set<String> keys = sorted.keySet();
         for (String key : keys) {
-            System.out.println(key + " " + menu.get(key));
+            System.out.println(key + " " + sorted.get(key));
         }
     }
 

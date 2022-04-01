@@ -10,7 +10,6 @@ public class CaTEringCapstoneCLI {
 
     private Menu menu;
     private Scanner inputScanner;
-    private Transaction transaction;
     private VendingMachine vendingMachine;
     private Funds balance;
     private AuditLog auditLog;
@@ -18,7 +17,6 @@ public class CaTEringCapstoneCLI {
     public CaTEringCapstoneCLI(Menu menu) {
         this.menu = menu;
         this.inputScanner = new Scanner(System.in);
-        this.transaction = new Transaction();
         this.balance = new Funds();
         this.vendingMachine = new VendingMachine();
         this.auditLog = new AuditLog();
@@ -41,6 +39,7 @@ public class CaTEringCapstoneCLI {
             if (level1Input.equals("D")) {
                 // display items
                 this.menu.levelOneSubD(this.vendingMachine);
+                System.out.println("");
             } else if (level1Input.equals("P")) {
                 // make a purchase
                 subP();
@@ -54,10 +53,11 @@ public class CaTEringCapstoneCLI {
     public void subP() {
         // purchase menu
         boolean keepGoing = true;
-
+        System.out.println("\nCurrent Money Provided: $" + balance.getBalance() + "\n");
         do {
             this.menu.levelOneSubP();
             String levelPInput = inputScanner.nextLine().toUpperCase();
+
 
             if (levelPInput.equals("M")) {
                 subM();
@@ -69,14 +69,13 @@ public class CaTEringCapstoneCLI {
                 keepGoing = false;
             }
 
+
         } while (keepGoing);
     }
 
     public void subM() {
         // add money
         boolean keepGoing = true;
-        System.out.println("Current Balance: $" + balance.getBalance());
-
         do {
             this.menu.subM();
             String levelMInput = inputScanner.nextLine().toUpperCase();
@@ -93,12 +92,14 @@ public class CaTEringCapstoneCLI {
             } else if (levelMInput.equals("4")) {
                 // Add $20
                 balance.deposit(new BigDecimal("20.00"));
-            } else if (levelMInput.equals("5")) {
+            } else if (levelMInput.equals("B")) {
                 keepGoing = false;
             }
-            System.out.println("Current Balance: $" + balance.getBalance());
+            System.out.println("\nCurrent Money Provided: $" + balance.getBalance() + "\n");
 
         } while (keepGoing);
+
+
     }
 
     public void subS() {
@@ -144,7 +145,7 @@ public class CaTEringCapstoneCLI {
 
     public void subF() {
         // finish transaction
-        balance.refund();
+        System.out.println(balance.refund());
 
     }
 

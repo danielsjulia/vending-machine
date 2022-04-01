@@ -1,10 +1,5 @@
 package com.techelevator.view;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-
-
 public class Menu {
 
 public void levelOne(){
@@ -21,7 +16,7 @@ public void levelOneSubP(){
 }
 
 public void subM(){
-    System.out.println("(1) $1\n(2) $5\n(3) $10\n(4) $20\n(5) Back");
+    System.out.println("(1) $1\n(2) $5\n(3) $10\n(4) $20\n(B) Back");
 }
 
 // to-do -- build out
