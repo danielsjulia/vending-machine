@@ -2,6 +2,7 @@ package com.techelevator.view;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 import java.util.*;
 
 public class VendingMachine {
@@ -24,7 +25,7 @@ public class VendingMachine {
                 String slot = lineArr[0];
                 String name = lineArr[1];
                 String typeOfFood = lineArr[2];
-                double price = Double.parseDouble(lineArr[3]);
+                BigDecimal price = BigDecimal.valueOf(Double.parseDouble(lineArr[3]));
 
                 if (typeOfFood.equals("Dessert")) {
                     Food item1 = new Dessert(name, price);

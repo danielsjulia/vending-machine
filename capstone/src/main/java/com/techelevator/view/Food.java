@@ -1,13 +1,15 @@
 package com.techelevator.view;
 
+import java.math.BigDecimal;
+
 public abstract class Food {
 
     private String name;
-    private double price;
+    private BigDecimal price;
     private int stock = 7;
     private String slot;
 
-    public Food(String name, double price) {
+    public Food(String name, BigDecimal price) {
         this.name = name;
         this.price = price;
         this.stock = stock;
@@ -29,7 +31,7 @@ public abstract class Food {
         return name;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 

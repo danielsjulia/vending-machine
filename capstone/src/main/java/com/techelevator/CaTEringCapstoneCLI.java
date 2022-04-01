@@ -3,6 +3,7 @@ package com.techelevator;
 import com.techelevator.view.*;
 import jdk.swing.interop.SwingInterOpUtils;
 
+import java.math.BigDecimal;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -32,7 +33,7 @@ public class CaTEringCapstoneCLI {
         boolean keepGoing = true;
 
         do {
-            //  to do -- build out main menu
+            //  main menu
             this.menu.levelOne();
             String level1Input = inputScanner.nextLine().toUpperCase();
 
@@ -50,7 +51,9 @@ public class CaTEringCapstoneCLI {
     }
 
     public void subP() {
+        // purchase menu
         boolean keepGoing = true;
+
         do {
             this.menu.levelOneSubP();
             String levelPInput = inputScanner.nextLine().toUpperCase();
@@ -61,6 +64,7 @@ public class CaTEringCapstoneCLI {
                 subS();
             } else if (levelPInput.equals("F")) {
                 // exit
+                subF();
                 keepGoing = false;
             }
 
@@ -68,53 +72,73 @@ public class CaTEringCapstoneCLI {
     }
 
     public void subM() {
+        // add money
         boolean keepGoing = true;
-        System.out.println(balance.getBalance());
+        System.out.println("Current Balance: $" + balance.getBalance());
+
         do {
             this.menu.subM();
             String levelMInput = inputScanner.nextLine().toUpperCase();
 
             if (levelMInput.equals("1")) {
                 // Add $1
-                balance.deposit(1);
+                balance.deposit(new BigDecimal("1.00"));
             } else if (levelMInput.equals("2")) {
                 // Add $5
-                balance.deposit(5);
+                balance.deposit(new BigDecimal("5.00"));
             } else if (levelMInput.equals("3")) {
                 // Add $10
-                balance.deposit(10);
+                balance.deposit(new BigDecimal("10.00"));
             } else if (levelMInput.equals("4")) {
                 // Add $20
-                balance.deposit(20);
+                balance.deposit(new BigDecimal("20.00"));
             } else if (levelMInput.equals("5")) {
                 keepGoing = false;
             }
-            System.out.println(balance.getBalance());
+            System.out.println("Current Balance: $" + balance.getBalance());
 
         } while (keepGoing);
     }
 
     public void subS() {
+        // select food
         boolean keepGoing = true;
+        this.menu.levelOneSubD(this.vendingMachine);
+        System.out.println("\nPress (B) to go back.");
 
         do {
-            this.menu.levelOneSubD(this.vendingMachine);
             String levelSInput = inputScanner.nextLine().toUpperCase();
             Food item = vendingMachine.getMenu().get(levelSInput);
-            if (!vendingMachine.getMenu().containsKey(levelSInput)){
-                System.out.println("Invalid Key, GTFO");
+
+            if (levelSInput.equals("B")){
                 keepGoing = false;
-            } else if (item.getStock() > 0){
-                vendingMachine.dispenseItem(item);
-                System.out.println(item.getName() + " $" + item.getPrice() + " $" + balance.getBalance());
-                System.out.println(item.message());
+            } else if (!vendingMachine.getMenu().containsKey(levelSInput)){
+                System.out.println("\nInvalid selection. Returning to Purchase menu...\n");
+                keepGoing = false;
             } else if (item.getStock() == 0){
-                System.out.println("NO LONGER AVAILABLE");
+                System.out.println("\n" + item + " NO LONGER AVAILABLE\n");
                 keepGoing = false;
+            } else if (balance.getBalance().compareTo(item.getPrice()) == -1) {
+                System.out.println("\nNot enough funds.\n");
+                keepGoing = false;
+            }else if (item.getStock() > 0 && balance.getBalance().compareTo(item.getPrice()) >= 0){
+                vendingMachine.dispenseItem(item);
+                balance.withdrawal(item.getPrice());
+                transaction.addItem(item);
+                System.out.println("\nSelected: " + item.getName() + " $" + item.getPrice() + " Remaining Balance: $" + balance.getBalance());
+                System.out.println(item.message());
             } else {
                 keepGoing = false;
             }
 
         } while (keepGoing);
     }
+
+    public void subF() {
+        // finish transaction
+        balance.refund();
+
+    }
+
+
 }
