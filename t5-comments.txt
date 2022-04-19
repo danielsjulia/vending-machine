@@ -1,0 +1,29 @@
+Overall great job! Minor issue below:
+
+
+- After entering an item, the program seems to pause waiting
+for something.
+
+---------------------------------------------
+Press (B) to go back.
+D4
+
+Selected: After Lunch Mint $1.35 Remaining Balance: $5.95
+Sugar, Sugar, so Sweet!
+---------------------------------------------
+
+However, when I press enter, the program resumes but I see an 
+invalid input message:
+
+
+----------------------------------------------
+Press (B) to go back.
+D4
+
+Selected: After Lunch Mint $1.35 Remaining Balance: $18.65
+Sugar, Sugar, so Sweet!
+
+
+Invalid selection. Returning to Purchase menu...
+----------------------------------------------
+
